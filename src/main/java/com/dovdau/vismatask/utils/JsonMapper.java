@@ -18,9 +18,10 @@ public class JsonMapper {
     public static List<Meeting> fromJsonArray(JSONArray jsonArray) {
         List<Meeting> meetingList = new ArrayList<Meeting>();
 
-        for (JSONObject obj : (Iterable<JSONObject>) jsonArray) {
+        //Converting jsonData string into JSON object and adding to array
+        for (JSONObject jsonObject : (Iterable<JSONObject>) jsonArray) {
             ArrayList<Person> participants = new ArrayList<>();
-            for (JSONObject object : (Iterable<JSONObject>) (JSONArray) obj.get("participants")) {
+            for (JSONObject object : (Iterable<JSONObject>) (JSONArray) jsonObject.get("participants")) {
                 participants.add(
                         new Person(
                                 ((Number) object.get("id")).intValue(),
@@ -30,14 +31,14 @@ public class JsonMapper {
             }
 
             Meeting meeting = new Meeting(
-                    ((Number) obj.get("id")).intValue(),
-                    (String) obj.get("name"),
-                    (Person) obj.get("responsiblePerson"),
-                    (String) obj.get("description"),
-                    Category.valueOf((String) obj.get("category")),
-                    Type.valueOf((String) obj.get("type")),
-                    LocalDateTime.parse((String) obj.get("startDate")),
-                    LocalDateTime.parse((String) obj.get("endDate")),
+                    ((Number) jsonObject.get("id")).intValue(),
+                    (String) jsonObject.get("name"),
+                    (Person) jsonObject.get("responsiblePerson"),
+                    (String) jsonObject.get("description"),
+                    Category.valueOf((String) jsonObject.get("category")),
+                    Type.valueOf((String) jsonObject.get("type")),
+                    LocalDateTime.parse((String) jsonObject.get("startDate")),
+                    LocalDateTime.parse((String) jsonObject.get("endDate")),
                     participants);
             meetingList.add(meeting);
         }

@@ -22,14 +22,12 @@ public class MeetingController {
     @Autowired
     private MeetingServiceImpl meetingService;
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/meetings")
     public Meeting createNewMeeting(@RequestBody Meeting meeting) {
         meetingService.addMeeting(meeting);
         return meeting;
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/meetings/{meetingId}")
     public void removeMeeting(@PathVariable int userId, @PathVariable int meetingId) {
         meetingService.removeMeeting(meetingId, userId);
@@ -40,7 +38,6 @@ public class MeetingController {
         return meetingService.addParticipant(meetingId, newParticipant);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/meetings/{meetingId}/{userId}")
     public void removeParticipant(@PathVariable int meetingId, @PathVariable int userId) {
         meetingService.removeParticipant(meetingId, userId);
