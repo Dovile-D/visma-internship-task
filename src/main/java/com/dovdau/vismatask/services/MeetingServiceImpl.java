@@ -33,7 +33,9 @@ public class MeetingServiceImpl implements MeetingService {
 
 
     // default repository
-    public MeetingServiceImpl() {this(null);}
+    public MeetingServiceImpl() {
+        this(null);
+    }
 
     public MeetingServiceImpl(String json) {
         meetingList = new ArrayList<>();
@@ -43,9 +45,9 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
 
-// write json
+    // write json
     public void saveData() {
-        try(FileWriter file = new FileWriter(jsonData)) {
+        try (FileWriter file = new FileWriter(jsonData)) {
             String json = JsonMapper.toJsonString(meetingList);
             file.write(json);
         } catch (Exception e) {
@@ -53,10 +55,12 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
-// load jason
+    // load jason
     public void loadData() {
         File f = new File(jsonData);
-        if(!f.exists() || f.isDirectory() || f.length() == 0) { return; }
+        if (!f.exists() || f.isDirectory() || f.length() == 0) {
+            return;
+        }
         try (FileReader file = new FileReader(jsonData)) {
             JSONParser jsonParser = new JSONParser();
             JSONArray jsonArray = (JSONArray) jsonParser.parse(file);
@@ -66,7 +70,7 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
-// find meeting by id
+    // find meeting by id
     public Meeting findMeeting(int id) {
         loadData();
         Optional<Meeting> meetingOption = meetingList.stream().filter(meet -> meet.getId() == id).findFirst();
@@ -76,13 +80,13 @@ public class MeetingServiceImpl implements MeetingService {
         return meetingOption.get();
     }
 
-// find all meetings
+    // find all meetings
     public List<Meeting> findMeetings() {
         loadData();
         return meetingList;
     }
 
-// filter meetings by given parameters
+    // filter meetings by given parameters
     public List<Meeting> findMeetings(MeetingFilter filter) {
         loadData();
         Integer responsiblePersonId = filter.getResponsiblePersonId();
@@ -122,7 +126,9 @@ public class MeetingServiceImpl implements MeetingService {
 
     public String addParticipant(int meetingId, Person participant) {
         Meeting meeting = findMeeting(meetingId);
-        if (meeting == null) { return "Meeting with id: " + meetingId + " not found"; }
+        if (meeting == null) {
+            return "Meeting with id: " + meetingId + " not found";
+        }
         int index = meetingList.indexOf(meeting);
         Stream<Person> attendeeStream = meeting.getParticipants().stream();
         // Person is already in this meeting
@@ -142,7 +148,7 @@ public class MeetingServiceImpl implements MeetingService {
         Meeting meeting = findMeeting(meetingId);
         int index = meetingList.indexOf(meeting);
         if (meeting != null) {
-            // check if participant ir not the owner of a meeting
+            // check if participant is not the owner of a meeting
             if (meeting.getResponsiblePerson().getId() != participantId) {
 
                 Stream<Person> participantStream = meeting.getParticipants().stream();

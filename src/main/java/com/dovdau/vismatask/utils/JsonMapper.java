@@ -20,7 +20,7 @@ public class JsonMapper {
 
         for (JSONObject obj : (Iterable<JSONObject>) jsonArray) {
             ArrayList<Person> participants = new ArrayList<>();
-            for(JSONObject object: (Iterable<JSONObject>) (JSONArray) obj.get("participants")) {
+            for (JSONObject object : (Iterable<JSONObject>) (JSONArray) obj.get("participants")) {
                 participants.add(
                         new Person(
                                 ((Number) object.get("id")).intValue(),
@@ -43,6 +43,7 @@ public class JsonMapper {
         }
         return meetingList;
     }
+
     public static String toJsonString(List<Meeting> meetingList) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();

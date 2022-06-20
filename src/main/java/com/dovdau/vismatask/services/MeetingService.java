@@ -8,13 +8,21 @@ import java.util.List;
 
 public interface MeetingService {
     void saveData();
+
     void loadData();
+
     Meeting findMeeting(int id);
+
     List<Meeting> findMeetings();
+
     List<Meeting> findMeetings(MeetingFilter filter);
+
     void addMeeting(Meeting newMeeting);
+
     void removeMeeting(int id, int responsiblePersonId);
+
     String addParticipant(int meetingId, Person participant);
+
     void removeParticipant(int meetingId, int participantId);
 
 }
