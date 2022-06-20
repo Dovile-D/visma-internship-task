@@ -33,6 +33,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     public MeetingServiceImpl(String json) {
+        
         meetingList = new ArrayList<>();
         if (json != null) {
             jsonData = json;
@@ -41,6 +42,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     // write json
     public void saveData() {
+        
         try (FileWriter file = new FileWriter(jsonData)) {
             String json = JsonMapper.toJsonString(meetingList);
             file.write(json);
@@ -51,6 +53,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     // load Json data from a file:
     public void loadData() {
+        
         File jsonfile = new File(MEETINGS_JSON_PATH);
         if (!jsonfile.exists() || jsonfile.isDirectory() || jsonfile.length() == 0) {
             return;
@@ -66,6 +69,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     // find meeting by id
     public Meeting findMeeting(int id) {
+        
         loadData();
         Optional<Meeting> meetingOptional = meetingList.stream().filter(meet -> meet.getId() == id).findFirst();
         if (!meetingOptional.isEmpty()) {
@@ -76,17 +80,20 @@ public class MeetingServiceImpl implements MeetingService {
 
     // find all meetings
     public List<Meeting> findMeetings() {
+        
         loadData();
         return meetingList;
     }
 
 
     public void addMeeting(Meeting newMeeting) {
+        
         meetingList.add(newMeeting);
         saveData();
     }
 
     public void removeMeeting(int id, int responsiblePersonId) {
+        
         Meeting meeting = findMeeting(id);
         if (meeting != null && meeting.getResponsiblePerson().getId() != responsiblePersonId) {
             meetingList.remove(meeting);
@@ -95,6 +102,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     public String addParticipant(int meetingId, Person participant) {
+        
         Meeting meeting = findMeeting(meetingId);
         if (meeting == null) {
             return "Meeting with id: " + meetingId + " not found";
@@ -116,6 +124,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     public void removeParticipant(int meetingId, int participantId) {
+        
         Meeting meeting = findMeeting(meetingId);
         int index = meetingList.indexOf(meeting);
         if (meeting != null) {
