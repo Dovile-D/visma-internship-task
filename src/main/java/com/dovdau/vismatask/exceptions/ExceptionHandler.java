@@ -31,4 +31,5 @@ public class ExceptionHandler {
         response.setTimeStamp(System.currentTimeMillis());
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }
