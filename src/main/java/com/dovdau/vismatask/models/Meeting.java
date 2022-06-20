@@ -4,6 +4,7 @@ import com.dovdau.vismatask.enums.Category;
 import com.dovdau.vismatask.enums.Type;
 import lombok.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -19,7 +20,9 @@ public class Meeting {
     private String description;
     private Category category;
     private Type type;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endDate;
     private ArrayList<Person> participants;
 
