@@ -1,9 +1,6 @@
 package com.dovdau.vismatask.services;
 
-import com.dovdau.vismatask.enums.Category;
-import com.dovdau.vismatask.enums.Type;
 import com.dovdau.vismatask.models.Meeting;
-import com.dovdau.vismatask.models.MeetingFilter;
 import com.dovdau.vismatask.models.Person;
 import com.dovdau.vismatask.utils.JsonMapper;
 
@@ -15,11 +12,9 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,7 +39,6 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
-
     // write json
     public void saveData() {
         try (FileWriter file = new FileWriter(jsonData)) {
@@ -55,10 +49,10 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
-    // load jason
+    // load Json data from a file:
     public void loadData() {
-        File f = new File(jsonData);
-        if (!f.exists() || f.isDirectory() || f.length() == 0) {
+        File jsonfile = new File(MEETINGS_JSON_PATH);
+        if (!jsonfile.exists() || jsonfile.isDirectory() || jsonfile.length() == 0) {
             return;
         }
         try (FileReader file = new FileReader(jsonData)) {
@@ -73,11 +67,11 @@ public class MeetingServiceImpl implements MeetingService {
     // find meeting by id
     public Meeting findMeeting(int id) {
         loadData();
-        Optional<Meeting> meetingOption = meetingList.stream().filter(meet -> meet.getId() == id).findFirst();
-        if (meetingOption.isEmpty()) {
-            return null;
+        Optional<Meeting> meetingOptional = meetingList.stream().filter(meet -> meet.getId() == id).findFirst();
+        if (!meetingOptional.isEmpty()) {
+            return meetingOptional.get();
         }
-        return meetingOption.get();
+        return null;
     }
 
     // find all meetings
@@ -86,29 +80,6 @@ public class MeetingServiceImpl implements MeetingService {
         return meetingList;
     }
 
-    // filter meetings by given parameters
-    public List<Meeting> findMeetings(MeetingFilter filter) {
-        loadData();
-        Integer responsiblePersonId = filter.getResponsiblePersonId();
-        String description = filter.getDescription();
-        Category category = filter.getCategory();
-        Type type = filter.getType();
-        LocalDateTime startDate = filter.getStartDate();
-        LocalDateTime endDate = filter.getEndDate();
-        Integer participants = filter.getParticipants();
-
-        return meetingList.stream()
-                .filter(meeting ->
-                        (responsiblePersonId == null || meeting.getResponsiblePerson().getId() == responsiblePersonId)
-                                && (description == null || description.isBlank() || Pattern.compile(description,
-                                Pattern.CASE_INSENSITIVE).matcher(meeting.getDescription()).find())
-                                && (category == null || meeting.getCategory().equals(category))
-                                && (type == null || meeting.getType().equals(type))
-                                && (startDate == null || meeting.getStartDate().compareTo(startDate) >= 0)
-                                && (endDate == null || meeting.getStartDate().compareTo(endDate) < 0)
-                                && (participants == null || meeting.getParticipants().size() >= participants)
-                ).collect(Collectors.toList());
-    }
 
     public void addMeeting(Meeting newMeeting) {
         meetingList.add(newMeeting);
@@ -121,7 +92,6 @@ public class MeetingServiceImpl implements MeetingService {
             meetingList.remove(meeting);
             saveData();
         }
-
     }
 
     public String addParticipant(int meetingId, Person participant) {
@@ -131,17 +101,18 @@ public class MeetingServiceImpl implements MeetingService {
         }
         int index = meetingList.indexOf(meeting);
         Stream<Person> attendeeStream = meeting.getParticipants().stream();
-        // Person is already in this meeting
-        if (attendeeStream.anyMatch(a -> a.getId() == participant.getId())) {
-            return participant.toString() + " is already in the meeting!";
+        // Check if person is already in this meeting
+        if (attendeeStream.anyMatch(a -> a.getId() != participant.getId())) {
+            List<Person> meetingParticipants = meeting.getParticipants();
+            meetingParticipants.add(participant);
+            meeting.setParticipants((ArrayList<Person>) meetingParticipants);
+            meetingList.set(index, meeting);
+            saveData();
+            return meetingParticipants.toString();
         }
-        // Good to add
-        List<Person> meetingParticipants = meeting.getParticipants();
-        meetingParticipants.add(participant);
-        meeting.setParticipants((ArrayList<Person>) meetingParticipants);
-        meetingList.set(index, meeting);
-        saveData();
-        return meetingParticipants.toString();
+        else {
+            return "This person is already in meeting";
+        }
     }
 
     public void removeParticipant(int meetingId, int participantId) {
@@ -150,9 +121,7 @@ public class MeetingServiceImpl implements MeetingService {
         if (meeting != null) {
             // check if participant is not the owner of a meeting
             if (meeting.getResponsiblePerson().getId() != participantId) {
-
                 Stream<Person> participantStream = meeting.getParticipants().stream();
-                // Good to remove
                 ArrayList<Person> meetingParticipants = participantStream.filter(att -> att.getId() != participantId)
                         .collect(Collectors.toCollection(ArrayList<Person>::new));
                 meeting.setParticipants(meetingParticipants);
