@@ -22,5 +22,4 @@ public interface MeetingService {
     String addParticipant(int meetingId, Person participant);
 
     void removeParticipant(int meetingId, int participantId);
-
 }
