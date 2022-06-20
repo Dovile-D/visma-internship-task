@@ -1,0 +1,162 @@
+  [
+    {
+      "id": "1",
+      "name": "Spring Framework",
+      "responsiblePerson": {
+        "id": 7,
+        "name": "Edgar",
+        "position": "International Data Specialist"
+      },
+      "description": "It not only provides dependency injection, which makes writing testable code easier but even many libraries and utility classes like JdbcTemplate, which makes day-to-day Java programming better.",
+      "category": "Short",
+      "type": "InPerson",
+      "startDate": "2022-07-13 14:47",
+      "endDate": "2022-07-13 16:03",
+      "participants": [
+        {
+                "id": 11,
+                "name": "Angela",
+                "position": "Central Operations Producer"
+            },
+            {
+                "id": 12,
+                "name": "Trevor",
+                "position": "District Paradigm Officer"
+            },
+            {
+                "id": 13,
+                "name": "Edwin",
+                "position": "Human Applications Strategist"
+            },
+            {
+                "id": 14,
+                "name": "Gwendolyn",
+                "position": "Internal Program Manager"
+            },
+            {
+                "id": 15,
+                "name": "Dave",
+                "position": "Legacy Assurance Architect"
+            },
+            {
+                "id": 16,
+                "name": "Cora",
+                "position": "International Implementation Planner"
+            }
+      ]
+    },
+
+    {
+      "id": "2",
+      "name": "Spring Boot",
+      "responsiblePerson": {
+        "id": 16,
+        "name": "Cora",
+        "position": "International Implementation Planner"
+      },
+      "description": "Spring Boot takes away the pain of using the Spring framework by auto-configuring most of the stuff you need, which makes Spring Framework easier to use and also cuts down the time you spend on bootstrapping your Java project.",
+      "category": "TeamBuilding",
+      "type": "InPerson",
+      "startDate": "2022-07-21 15:58",
+      "endDate": "2022-07-21 18:06",
+      "participants": {}
+    },
+    {
+      "id": "3",
+      "name": "Rest",
+      "responsiblePerson": {
+        "id": 9,
+        "name": "Eloise",
+        "position": "Future Implementation Officer"
+      },
+      "description": "There is hardly any web application nowadays which doesn't expose API or make use of REST API. ",
+      "category": "CodeMonkey",
+      "type": "InPerson",
+      "startDate": "2022-07-02 22:32",
+      "endDate": "2022-07-29 04:25",
+      "participants": [
+        {
+                "id": 7,
+                "name": "Edgar",
+                "position": "International Data Specialist"
+            },
+            {
+                "id": 8,
+                "name": "Alice",
+                "position": "Principal Marketing Agent"
+            },
+            {
+                "id": 9,
+                "name": "Eloise",
+                "position": "Future Implementation Officer"
+            }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Cloud Computing",
+      "responsiblePerson": {
+        "id": 12,
+        "name": "Trevor",
+        "position": "District Paradigm Officer"
+      },
+      "description": "AWS, Google Cloud Platform and Microsoft Azure",
+      "category": "Short",
+      "type": "Live",
+      "startDate": "2022-07-23 16:50",
+      "endDate": "2022-07-23 17:26",
+      "participants": [
+        {
+                "id": 11,
+                "name": "Angela",
+                "position": "Central Operations Producer"
+            },
+            {
+                "id": 12,
+                "name": "Trevor",
+                "position": "District Paradigm Officer"
+            }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "RedHat",
+      "responsiblePerson": {
+        "id": 1,
+        "name": "Emilio",
+        "position": "Product Implementation Strategist"
+      },
+      "description": "High-performing Linux, cloud, automation and management, container, and Kubernetes technologies",
+      "category": "Short",
+      "type": "Live",
+      "startDate": "2022-07-16 12:36",
+      "endDate": "2022-07-16 13:14",
+      "participants": [
+        {
+                "id": 0,
+                "name": "Nick",
+                "position": "National Identity Analyst"
+            },
+            {
+                "id": 1,
+                "name": "Emilio",
+                "position": "Product Implementation Strategist"
+            },
+            {
+                "id": 2,
+                "name": "Edmund",
+                "position": "Internal Brand Producer"
+            },
+            {
+                "id": 3,
+                "name": "Taylor",
+                "position": "Human Intranet Strategist"
+            },
+            {
+                "id": 4,
+                "name": "Kristi",
+                "position": "Human Tactics Orchestrator"
+            }
+      ]
+    }
+  ]
