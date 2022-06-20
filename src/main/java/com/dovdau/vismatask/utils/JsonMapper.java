@@ -22,11 +22,10 @@ public class JsonMapper {
         for (JSONObject jsonObject : (Iterable<JSONObject>) jsonArray) {
             ArrayList<Person> participants = new ArrayList<>();
             for (JSONObject object : (Iterable<JSONObject>) (JSONArray) jsonObject.get("participants")) {
-                participants.add(
-                        new Person(
-                                ((Number) object.get("id")).intValue(),
-                                (String) object.get("name"),
-                                (String) object.get("position"))
+                participants.add(new Person(
+                       ((Number) object.get("id")).intValue(),
+                       (String) object.get("name"),
+                       (String) object.get("position"))
                 );
             }
 
