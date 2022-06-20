@@ -15,8 +15,6 @@ public interface MeetingService {
 
     List<Meeting> findMeetings();
 
-    List<Meeting> findMeetings(MeetingFilter filter);
-
     void addMeeting(Meeting newMeeting);
 
     void removeMeeting(int id, int responsiblePersonId);
